@@ -1,9 +1,6 @@
-/** @jsxImportSource https://esm.sh/preact@10.5.15 */
+import { PodList } from "https://deno.land/x/kubernetes_apis@v0.4.0/builtin/core@v1/structs.ts";
 
-import "./twindSheet.ts";
-import pods from "./pods.json" assert { type: "json" };
-
-export function App() {
+export function App({ pods }: { pods: PodList }) {
   // layout stolen from https://www.kindacode.com/article/tailwind-css-grid-examples/
   return (
     <div tw="mx-auto container grid grid-cols-5">
@@ -14,13 +11,25 @@ export function App() {
         <h1 tw="text-center text-2xl text-white">Menu</h1>
       </aside>
 
-      <main tw="col-span-5 md:col-span-3 h-96 p-10 bg-blue-200">
+      <main tw="col-span-5 md:col-span-3 p-10 bg-blue-200">
         <h1 tw="text-center text-2xl">Main Content</h1>
-        {pods.items.map((p) => (
+        {pods.items.map(({ metadata, status }) => (
           <div>
-            <button>
-              {p.metadata.name}
-            </button>
+            <form method="POST">
+              <input
+                type="hidden"
+                name="namespace"
+                value={metadata?.namespace as string}
+              />
+              <input
+                type="hidden"
+                name="name"
+                value={metadata?.name as string}
+              />
+              <button type="submit">
+                {metadata?.namespace}/{metadata?.name} ({status?.phase})
+              </button>
+            </form>
           </div>
         ))}
       </main>

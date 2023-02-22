@@ -1,0 +1,17 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-net --allow-read --allow-env --unstable main.tsx"
+    "kubes:dev": "deno run --unstable --allow-env=KUBECONFIG --allow-read=$HOME/.kube --allow-net=nucles.localdomain:6443 kubes.ts",
+    "kubes:incluster": "deno run --allow-read=/var/run/secrets/kubernetes.io --allow-net --cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt kubes.ts"
+  },
+  "imports": {
+    "preact": "https://esm.sh/preact@10.5.15",
+    "preact/jsx-runtime": "https://esm.sh/preact@10.5.15/jsx-runtime",
+    "preact/jsx-runtime-dev": "https://esm.sh/preact@10.5.15/jsx-runtime-dev"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "types": ["./preact-tw-prop.d.ts"]
+  }
+}
