@@ -1,6 +1,8 @@
 {
   "tasks": {
-    "start": "deno run -A --watch=static/,routes/ dev.ts"
+    "start": "deno run --unstable -A --watch=static/,routes/ dev.ts",
+    "kubes:dev": "deno run --unstable --allow-env=KUBECONFIG --allow-read=$HOME/.kube --allow-net=nucles.localdomain:6443 kubes.ts",
+    "kubes:incluster": "deno run --allow-read=/var/run/secrets/kubernetes.io --allow-net --cert=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt kubes.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
